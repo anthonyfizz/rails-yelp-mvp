@@ -6,8 +6,27 @@
   <title>show</title>
 </head>
 <body>
-  <%= link_to 'Edit', edit_restaurant_path(@restaurant) %> |
-  <%= link_to 'Back', restaurants_path %> |
-  <%= link_to 'Leave a review', new_restaurant_review_path(@restaurant) %>
-</body>
+  <h2><%= @restaurant.name %></h2>
+  <p><%= @restaurant.address %></p>
+  <p><%= @restaurant.category %></p>
+  <p><%= @restaurant.phone_number %></p>
+
+  <ul class="list-group">
+  <% @restaurant.reviews.each do |review| %>
+    <li class="list-group-item"><%= review.content %>(<%= review.rating %>/5)</li>
+  <% end %>
+  </ul>
+
+  <%= simple_form_for [@restaurant, @review] do |f| %>
+  <%= f.input :content %>
+  <%= f.input :rating %>
+  <%= f.submit "Submit review", class: "btn btn-primary" %>
+  <% end %>
+
+
+<%= link_to 'Edit', new_restaurant_path(@restaurant) %> |
+<%= link_to 'Back', restaurants_path %> |
+<%= link_to 'Leave a review', new_restaurant_review_path(@restaurant) %>
+
+ </body>
 </html>
